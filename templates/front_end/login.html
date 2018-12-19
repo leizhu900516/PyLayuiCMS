@@ -1,0 +1,74 @@
+{% extends 'front_end/base.html' %}
+
+{% block customcss %}
+<style>
+    .chc-login{position: relative;height: 400px;top: 90px;margin: 0 auto;}
+    .chc-form-item{position: relative}
+    .chc-form-item i{position: absolute;margin-top: 10px;margin-left: 13px;}
+    .layui-input, .layui-textarea {display: block;width: 100%;padding-left: 50px;}
+    .chc-form-title h2{    margin-bottom: 10px;text-align: center;font-weight: 300;font-size: 30px;color: #000;}
+    .chc-form-title p{text-align: center;color: #666}
+    .chc-btn-login{background-color: #2db5a3}
+</style>
+{% endblock %}
+
+{% block content%}
+  <!-- banner部分 -->
+  <!-- main部分 -->
+  <div class="main-service">
+    <div class="layui-container" >
+      <div class="layui-row">
+          <div class="layui-col-md6 layui-col-xs12">&nbsp;</div>
+          <div class="layui-col-md6 layui-col-xs12" style="margin-top: 100px;">
+                <form class="layui-form chc-login" action="" onsubmit="return false">
+                  <div class="layui-form-item chc-form-title">
+                      <h2>登陆</h2>
+                       <p>授权登陆，违法必究</p>
+                  </div>
+                  <div class="layui-form-item chc-form-item">
+                      <i class="layui-icon layui-icon-username"></i>
+                      <input type="text" name="username" required  lay-verify="required" placeholder="姓名" autocomplete="off" class="layui-input">
+                  </div>
+                  <div class="layui-form-item chc-form-item">
+                      <i class="layui-icon layui-icon-password"></i>
+                      <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                  </div>
+                  <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid chc-btn-login" lay-submit lay-filter="formDemo">登陆</button>
+                  </div>
+                </form>
+          </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block customjs %}
+    <script>
+    //Demo
+    layui.use(['form','jquery','layer'], function(){
+      var form = layui.form,
+      $ = layui.jquery,
+      layer = layui.layer;
+      //监听提交
+      form.on('submit(formDemo)', function(data){
+        //layer.msg(JSON.stringify(data.field));
+        $.ajax({
+            url:'/login.html',
+            type:'post',
+            data:data.field,
+            dataType:'json',
+            success:function (result) {
+                console.log(result);
+                if(result.code==0){
+                    window.location.href = "/manage/"
+                }else {
+                    layer.msg(result.msg,{time:2000})
+                }
+            }
+        });
+      });
+    });
+    </script>
+{% endblock %}
