@@ -11,3 +11,8 @@ admin = Blueprint("admin",__name__)
 @login_auth
 def adminhome():
     return render_template('back_end/index.html')
+
+@admin.route("/product")
+@login_auth
+def productmanage():
+    return render_template('back_end/product.html')

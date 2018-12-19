@@ -15,6 +15,7 @@
   <meta name="format-detection" content="telephone=no">
   
   <link rel="stylesheet" href="/static/res/layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="/static/css/back_end.css"  media="all">
     {%block customcss%}
     {%endblock%}
 </head>
@@ -25,8 +26,8 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item"><a href="">产品管理</a></li>
+      <li class="layui-nav-item"><a href="">新闻管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -56,30 +57,26 @@
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">所有商品</a>
+          <a class="" href="javascript:;">网站修改</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="javascript:;">列表三</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="javascript:;">主页修改</a></dd>
+            <dd><a href="javascript:;">产品页</a></dd>
+            <dd><a href="javascript:;">新闻页</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">解决方案</a>
+        <li class="layui-nav-item {% if request.path == '/manage/product'%} layui-nav-itemed{% endif %}">
+          <a href="javascript:;">信息录入</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd {% if request.path == '/manage/product'%} class="layui-this"{% endif %}><a href="/manage/product">新闻&产品</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
       </ul>
     </div>
   </div>
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
+
       {% block content%}
       {%endblock%}
   </div>
@@ -94,13 +91,16 @@
   <script src="/static/res/layui/html5.min.js"></script>
   <script src="/static/res/layui/respond.min.js"></script>
 <![endif]-->
-    {%block customjs%}
-    {%endblock%}
+
 <script>
 //JavaScript代码区域
-layui.use('element', function(){
-  var element = layui.element;
-  
+layui.use(['element','form','layedit','upload'], function(){
+  var element = layui.element
+      ,form = layui.form
+      ,upload = layui.upload
+      ,layedit = layui.layedit;
+   {%block customjs%}
+    {%endblock%}
 });
 </script>
 

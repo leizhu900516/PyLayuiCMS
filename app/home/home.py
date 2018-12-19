@@ -78,7 +78,6 @@ def login():
             expires = int(time.time())+24*3600
             cookiesdict[token] = expires
             response.set_cookie(cookiename,token,max_age=expires)
-            print(">>>>>>>>>")
     elif method == 'GET':
         response = render_template('front_end/login.html')
     return response
