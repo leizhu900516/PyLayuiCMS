@@ -20,6 +20,12 @@ def homes():
     for i in result:
         if i['page_location']=="home.slide":
             data.setdefault("homeslide",[]).append(i['imageurl'])
+    products = mysqlhandle.select("select * from plc_products",ret='all')
+    for i in products:
+        data.setdefault('homeproduct',[]).append([i['title'],i['abstract']])
+    text = mysqlhandle.select("select * from plc_slogan",ret='all')
+    for i in text:
+        data.setdefault('text',{})[i['id']] = i['title']
     return render_template('front_end/index.html',data = data)
 
 

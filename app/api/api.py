@@ -82,3 +82,33 @@ def uploadimg():
     data['msg'] = "sss"
     data.setdefault('data',{})['src']="{0}{1}".format(image_path,_storefilename)
     return jsonify(data)
+
+
+
+@api.route("/text",methods=['GET'])
+@login_auth
+def gettext():
+    '''
+    全网标题修改
+    :return:
+    '''
+    data = {}
+    try:
+        mysqlhandle = MysqlHandle(**mysqlconfig)
+        result = mysqlhandle.select("select * from plc_slogan",ret='all')
+        for i in result:
+            data.setdefault('data',[]).append(
+                {
+                    "id":str(i['id']),
+                    "title":'<span style="color: #01AAED;">{0}</span>'.format(i['title']),
+                    "addtimes":time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(i['addtimes']))
+                }
+            )
+        data['count'] = len(result)
+        data['code'] = 0
+        data['msg'] = 'success'
+    except Exception as e:
+        data['count'] = 0
+        data['code'] = 1
+        data['msg'] = str(e)
+    return jsonify(data)

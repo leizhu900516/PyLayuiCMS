@@ -24,11 +24,11 @@
           <span></span><span></span><span></span>
         </button>
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item layui-this"><a href="/">首页</a></li>
-          <li class="layui-nav-item"><a href="/product.html">产品</a></li>
-          <li class="layui-nav-item"><a href="/news.html">动态</a></li>
-          <li class="layui-nav-item"><a href="/case.html">案例</a></li>
-          <li class="layui-nav-item"><a href="/about.html">关于</a></li>
+          <li class="layui-nav-item {% if request.path == '/'%} layui-this {%endif%}"><a href="/">首页</a></li>
+          <li class="layui-nav-item {% if request.path == '/product.html'%} layui-this {%endif%}"><a href="/product.html">产品</a></li>
+          <li class="layui-nav-item {% if request.path == '/news.html'%} layui-this {%endif%}"><a href="/news.html">动态</a></li>
+          <li class="layui-nav-item {% if request.path == '/case.html'%} layui-this {%endif%}"><a href="/case.html">案例</a></li>
+          <li class="layui-nav-item {% if request.path == '/about.html'%} layui-this {%endif%}"><a href="/about.html">关于</a></li>
         </ul>
       </div>
     </div>
@@ -52,12 +52,12 @@
         <div class="layui-col-sm10 layui-col-lg11">
           <div class="layui-row">
             <div class="layui-col-sm6 layui-col-md8 layui-col-lg9">
-              <p class="contact-top"><i class="layui-icon layui-icon-cellphone"></i>&nbsp;400-8888888&nbsp;&nbsp;&nbsp;(9:00-18:00)</p>
-              <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;88888888@163.com</span></p>
+              <p class="contact-top"><i class="layui-icon layui-icon-cellphone"></i>&nbsp;{{data.text.7}}</p>
+              <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;{{data.text.8}}</span></p>
             </div>
             <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
-              <p class="contact-top"><span class="right">浙江杭州阿里巴巴西溪园区</span></p>
-              <p class="contact-bottom"><span class="right">Copyright&nbsp;©&nbsp;2016-2018&nbsp;&nbsp;ICP&nbsp;备888888号</span></p>
+              <p class="contact-top"><span class="right">{{data.text.9}}</span></p>
+              <p class="contact-bottom"><span class="right">{{data.text.6}}</span></p>
             </div>
           </div>
         </div>

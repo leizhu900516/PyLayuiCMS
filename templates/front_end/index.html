@@ -11,15 +11,15 @@
         <div>
           <img src="{{ data.homeslide[0]}}">
           <div class="panel">
-            <p class="title">类友网络</p>
-            <p>完美前端体验</p>
+            <p class="title">{{data.text.1}}</p>
+            <p>{{data.text.2}}</p>
           </div>
         </div>
         <div>
           <img src="{{ data.homeslide[1]}}">
           <div class="panel">
-            <p class="title">类友网络</p>
-            <p>完美前端体验</p>
+            <p class="title">{{data.text.1}}</p>
+            <p>{{data.text.2}}</p>
           </div>
         </div>
       </div>
@@ -28,18 +28,21 @@
   <!-- main部分 -->
   <div class="main-product">
     <div class="layui-container">
-      <p class="title">专为前端而研制的<span>核心产品</span></p>
+      <p class="title">{{data.text.3}}<span>核心产品</span></p>
       <div class="layui-row layui-col-space25">
+        {% for i in data.homeproduct%}
         <div class="layui-col-sm6 layui-col-md3">
           <div class="content">
             <div><img src="/static/res/static/img/Big_icon1.png"></div>
             <div>
-              <p class="label">JS基础库</p>
-              <p>从小屏逐步扩展到大屏，最终实现所有屏幕适配，适应移动互联潮流。</p>
+              <p class="label">{{i.0}}</p>
+              <p>{{i.1}}</p>
             </div>
             <a href="javascript:;">查看产品 ></a>
           </div>
         </div>
+        {%endfor%}
+        <!--
         <div class="layui-col-sm6 layui-col-md3 ">
           <div class="content">
             <div><img src="/static/res/static/img/Big_icon2.png"></div>
@@ -70,12 +73,13 @@
             <a href="javascript:;">查看产品 ></a>
           </div>
         </div>
+        -->
       </div>
     </div>
   </div>
   <div class="main-service">
     <div class="layui-container">
-      <p class="title">为客户打造完美的<span>专业服务</span></p>
+      <p class="title">{{data.text.4}}<span>专业服务</span></p>
       <div class="layui-row layui-col-space25 layui-col-space80">
         <div class="layui-col-sm6">
           <div class="content">

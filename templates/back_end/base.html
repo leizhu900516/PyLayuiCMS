@@ -55,9 +55,9 @@
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">网站修改</a>
-          <dl class="layui-nav-child {% if request.path == '/manage/images'%} layui-nav-itemed{% endif %}">
+          <dl class="layui-nav-child {% if request.path == '/manage/images' or request.path == '/manage/text' %} layui-nav-itemed{% endif %}">
             <dd {% if request.path == '/manage/images'%} class="layui-this"{% endif %}><a href="/manage/images">图片</a></dd>
-            <dd><a href="javascript:;">标题</a></dd>
+            <dd {% if request.path == '/manage/text'%} class="layui-this"{% endif %}><a href="/manage/text">标题</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item {% if request.path == '/manage/product'%} layui-nav-itemed{% endif %}">
@@ -90,11 +90,12 @@
 
 <script>
 //JavaScript代码区域
-layui.use(['element','form','layedit','upload','jquery','layer'], function(){
+layui.use(['element','form','layedit','upload','jquery','layer','table'], function(){
   var element = layui.element
       ,form = layui.form
       ,layer = layui.layer
       ,$ = layui.jquery
+      ,table = layui.table
       ,upload = layui.upload
       ,layedit = layui.layedit;
    {%block customjs%}

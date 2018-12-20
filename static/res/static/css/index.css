@@ -45,6 +45,7 @@ body{background: #FFF;}
 .main-product p.title span
 ,.main-service p.title span{color: #2db5a3;}
 .main-product .content{border: 1px solid #DEDEDE; padding: 30px 36px 0 36px; text-align: center; transition: 0.3s;}
+.main-product .content div:nth-child(2){height: 196px;overflow: hidden;text-overflow: ellipsis;}
 .main-product .content p.label{font-size: 18px; color: #939393; line-height: 46px; padding-top: 6px;}
 .main-product .content a{font-size: 18px; color: #a1d8cb; line-height: 68px;}
 .main-product .content:hover{box-shadow: 0 0 3px 3px #EEE; transition: 0.3s;}
@@ -163,7 +164,10 @@ body{background: #FFF;}
 .main-about .tabCour .timeline li .cour-panel p.label{font-size: 18px; color: #000;}
 .main-about .tabCour .timeline li .cour-panel p{color: #949494; line-height: 30px;}
 
-
+/*layui 重改*/
+.layui-card-header {
+    font-weight: bold!important;
+}
 
 /*后台*/
 @media screen and (max-width: 480px){
