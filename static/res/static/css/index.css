@@ -80,7 +80,7 @@ body{background: #FFF;}
 .main.product{padding: 30px 0 75px 0;}
 .main.product .content{padding: 50px 0; border-bottom: 1px solid #e8e8e8;}
 .main.product .content .content-img{text-align: center;}
-.main.product .content .content-img img{max-width: 100%;}
+.main.product .content .content-img img{max-width: 100%;max-height: 320px;}
 .main.product .content .label{color: #565656; font-size: 30px; line-height: 78px; margin-top: 32px;}
 .main.product .content .detail{font-size: 16px; line-height: 28px; color: #d7d7d7; padding-bottom: 30px;}
 .main.product .content a{color: #a0d2cc; font-size: 16px; line-height: 38px; padding:10px 11px 10px 23px; border: 1px solid #a0d2cc; border-radius: 3px;}
@@ -164,6 +164,8 @@ body{background: #FFF;}
 .main-about .tabCour .timeline li .cour-panel p{color: #949494; line-height: 30px;}
 
 
+
+/*后台*/
 @media screen and (max-width: 480px){
   .main-service .content .content-right{padding: 10px 10px 0 10px;}
   .main-service .content .content-right p{line-height: 24px;}

@@ -55,10 +55,9 @@
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">网站修改</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">主页修改</a></dd>
-            <dd><a href="javascript:;">产品页</a></dd>
-            <dd><a href="javascript:;">新闻页</a></dd>
+          <dl class="layui-nav-child {% if request.path == '/manage/images'%} layui-nav-itemed{% endif %}">
+            <dd {% if request.path == '/manage/images'%} class="layui-this"{% endif %}><a href="/manage/images">图片</a></dd>
+            <dd><a href="javascript:;">标题</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item {% if request.path == '/manage/product'%} layui-nav-itemed{% endif %}">

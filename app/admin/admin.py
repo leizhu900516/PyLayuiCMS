@@ -16,3 +16,10 @@ def adminhome():
 @login_auth
 def productmanage():
     return render_template('back_end/product.html')
+
+
+
+@admin.route("/images")
+@login_auth
+def imagesManage():
+    return render_template('back_end/images.html')

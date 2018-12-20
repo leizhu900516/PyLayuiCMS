@@ -1,0 +1,78 @@
+{% extends 'back_end/base.html'%}
+
+{% block content%}
+
+    <div style="padding: 15px">
+        <div class="layui-col-md12 layui-col-xs12">
+            <h3 class="chc-one-title">全站前台图片修改</h3>
+        </div>
+        <div class="layui-col-xs12 layui-col-md12">
+             <div class="layui-row">
+                 <div class="layui-col-xs6">aa</div>
+                 <div class="layui-col-xs6">v</div>
+             </div>
+        </div>
+
+    </div>
+{%endblock%}
+
+ {% block customjs%}
+  //创建一个编辑器
+    layedit.set({
+      uploadImage: {
+        url: '' //接口url
+        ,type: '' //默认post
+      }
+    });
+  var editIndex = layedit.build('LAY_demo_editor');
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    var content = layedit.getContent(editIndex);
+    var show_image = $("#uploadimgsrc").attr('src');
+    data.field['content'] = content;
+    data.field['file'] = show_image;
+    $.ajax({
+        url:"/api/content",
+        type:"post",
+        data:data.field,
+        dataType:"json",
+        success:function(result){
+            if(result.code==0){
+            setTimeout(function(){
+            window.location.reload();
+            },2000)
+        }
+        layer.msg(result.msg,{time:2000})
+        }
+    });
+    return false;
+  });
+//普通图片上传
+  var uploadInst = upload.render({
+    elem: '#test1'
+    ,url: '/api/uploadimg'
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        <!--$('#uploadimgsrc').attr('src', result); //图片链接（base64）-->
+      });
+    }
+    ,done: function(res){
+        console.log(res);
+      //如果上传失败
+      if(res.code > 0){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+        $('#uploadimgsrc').attr('src', res.data.src); //图片链接（base64）
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#demoText');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
+{% endblock%}
