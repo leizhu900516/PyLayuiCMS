@@ -1,12 +1,9 @@
-
- 
- 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>layout 后台大布局 - Layui</title>
+  <title>后台管理系统</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,7 +22,7 @@
     <div class="layui-logo">后台管理系统</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
+      <li class="layui-nav-item"><a href="/">网站主页</a></li>
       <li class="layui-nav-item"><a href="">产品管理</a></li>
       <li class="layui-nav-item"><a href="">新闻管理</a></li>
       <li class="layui-nav-item">
@@ -94,9 +91,11 @@
 
 <script>
 //JavaScript代码区域
-layui.use(['element','form','layedit','upload'], function(){
+layui.use(['element','form','layedit','upload','jquery','layer'], function(){
   var element = layui.element
       ,form = layui.form
+      ,layer = layui.layer
+      ,$ = layui.jquery
       ,upload = layui.upload
       ,layedit = layui.layedit;
    {%block customjs%}

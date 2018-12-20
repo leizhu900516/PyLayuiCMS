@@ -15,7 +15,7 @@
     <div class="layui-container">
       {% for i in data %}
       <div class="content layui-row">
-        <div class="layui-col-xs12 layui-col-sm6 layui-col-md7 layui-col-lg6 content-img"><img src="/static/res/static/img/Product_img1.jpg"></div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md7 layui-col-lg6 content-img"><img src="{{i.show_image}}"></div>
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md5 layui-col-lg6 right">
           <p class="label">{{i.name}}</p>
           <p class="detail">{{i.abstract}}</p>

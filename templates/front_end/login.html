@@ -2,13 +2,31 @@
 
 {% block customcss %}
 <style>
-    .chc-login{position: relative;height: 400px;top: 90px;margin: 0 auto;}
+    .chc-login{position: relative;height: 415px;top: 50px;margin: 0 auto;}
     .chc-form-item{position: relative}
     .chc-form-item i{position: absolute;margin-top: 10px;margin-left: 13px;}
     .layui-input, .layui-textarea {display: block;width: 100%;padding-left: 50px;}
-    .chc-form-title h2{    margin-bottom: 10px;text-align: center;font-weight: 300;font-size: 30px;color: #000;}
+    .chc-form-title h2{    margin-bottom: 10px;text-align: center;font-weight: 330;font-size: 30px;color: #000;}
     .chc-form-title p{text-align: center;color: #666}
     .chc-btn-login{background-color: #2db5a3}
+    .feiji-left{text-align: center;overflow: hidden;margin-top: 73px;position: relative;animation: ghostUpdown 1.5s infinite alternate;-webkit-animation: ghostUpdown 1.5s infinite alternate;}
+    .feiji-left img{width: 100%;height: 100%;  max-width: 400px;max-height: 400px;}
+    @keyframes ghostUpdown {
+        from {
+            margin-top: 100px;
+        }
+        to {
+            margin-top: 70px;
+        }
+    }
+    @-webkit-keyframes ghostUpdown {
+        from {
+            margin-top: 100px;
+        }
+        to {
+            margin-top: 70px;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -18,8 +36,13 @@
   <div class="main-service">
     <div class="layui-container" >
       <div class="layui-row">
-          <div class="layui-col-md6 layui-col-xs12">&nbsp;</div>
-          <div class="layui-col-md6 layui-col-xs12" style="margin-top: 100px;">
+          <div class="layui-col-md6 layui-col-xs12">
+              <div class="feiji-left">
+                  <img src="/static/res/static/img/feiji.png">
+              </div>
+          </div>
+          <div class="layui-col-md1 layui-hide-xs">&nbsp;</div>
+          <div class="layui-col-md4 layui-col-xs12" style="margin-top: 100px;">
                 <form class="layui-form chc-login" action="" onsubmit="return false">
                   <div class="layui-form-item chc-form-title">
                       <h2>登陆</h2>
@@ -38,6 +61,7 @@
                   </div>
                 </form>
           </div>
+          <div class="layui-col-md1 layui-hide-xs">&nbsp;</div>
 
       </div>
     </div>

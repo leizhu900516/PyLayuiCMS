@@ -30,4 +30,5 @@ def saltmd5(passwd):
     _m = hashlib.md5()
     _m.update(passwd.encode('utf-8'))
     md5passwd = _m.hexdigest()
+    print(md5passwd)
     return md5passwd

@@ -15,3 +15,6 @@ mysqlconfig = {
 
 #cookie name
 cookiename = 'c_into'
+
+#image path
+image_path = "/static/res/static/images/"
