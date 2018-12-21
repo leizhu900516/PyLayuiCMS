@@ -6,53 +6,13 @@
         <div class="layui-col-md12 layui-col-xs12">
             <h3 class="chc-one-title">全站标题修改</h3>
             <blockquote class="layui-elem-quote" style="    background-color: #fff;color: #FFB800">
-                该功能可以替换网站的各种文字标语。如果不知道具体哪个才是要替换的目标。可以去主页搜索。然后来后台进行替换。
+                添加网站其它信息，其它功能添加面板
             </blockquote>
         </div>
-        <div class="layui-col-xs12 layui-col-md12 ">
-             <div class="layui-row layui-col-space10">
-                 <div class="layui-col-xs12">
-                    <div class="layui-card">
-                      <div class="layui-card-header">全部标题 &nbsp;&nbsp;&nbsp;&nbsp;<span class="layui-badge-dot"></span>双击修改</div>
-                      <div class="layui-card-body">
-                            <table class="layui-table" lay-data="{url:'/api/text', id:'test3',page: true,limit: 100}" lay-filter="test3">
-                              <thead>
-                                <tr>
-                                  <th lay-data="{field:'id', width:'10%'}">ID</th>
-                                  <th lay-data="{field:'title', width:'70%' ,edit: 'text'}">标题</th>
-                                  <th lay-data="{field:'addtimes', width:'20%',sort: true}">时间</th>
-                                </tr>
-                              </thead>
-                            </table>
-                      </div>
-                    </div>
-                 </div>
-
-             </div>
-        </div>
-
     </div>
 {%endblock%}
 
  {% block customjs%}
-    //监听单元格编辑
-  table.on('edit(test3)', function(obj){
-    var value = obj.value //得到修改后的值
-    ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-    //layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
-    $.ajax({
-        url:"/api/text",
-        type:"post",
-        data:{id:data.id,text:value},
-        dataType:"json",
-        success:function(result){
-            layer.msg(result.msg,{time:2000});
-            setTimeout(function(){
-                window.location.reload();
-            },2000)
-            }
 
-        })
-  });
+
 {% endblock%}
