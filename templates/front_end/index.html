@@ -11,15 +11,15 @@
         <div>
           <img src="{{ data.homeslide[0]}}">
           <div class="panel">
-            <p class="title">{{data.text.1}}</p>
-            <p>{{data.text.2}}</p>
+            <p class="title">{{data.public_slogan.1}}</p>
+            <p>{{data.public_slogan.2}}</p>
           </div>
         </div>
         <div>
           <img src="{{ data.homeslide[1]}}">
           <div class="panel">
-            <p class="title">{{data.text.1}}</p>
-            <p>{{data.text.2}}</p>
+            <p class="title">{{data.public_slogan.1}}</p>
+            <p>{{data.public_slogan.2}}</p>
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
   <!-- main部分 -->
   <div class="main-product">
     <div class="layui-container">
-      <p class="title">{{data.text.3}}<span>核心产品</span></p>
+      <p class="title">{{data.public_slogan.3}}<span>核心产品</span></p>
       <div class="layui-row layui-col-space25">
         {% for i in data.homeproduct%}
         <div class="layui-col-sm6 layui-col-md3">
@@ -79,18 +79,21 @@
   </div>
   <div class="main-service">
     <div class="layui-container">
-      <p class="title">{{data.text.4}}<span>专业服务</span></p>
+      <p class="title">{{data.public_slogan.4}}<span>专业服务</span></p>
       <div class="layui-row layui-col-space25 layui-col-space80">
+        {% for i in data.homeservice %}
         <div class="layui-col-sm6">
           <div class="content">
-            <div class="content-left"><img src="/static/res/static/img/home_img1.jpg"></div>
+            <div class="content-left"><img src="{{ i.2}}"></div>
             <div class="content-right">
-              <p class="label">1 对 1 前端指导</p>
+              <p class="label">{{ i.0}}</p>
               <span></span>
-              <p>更有多个包含不同主题的Web组件，可快速构建界面出色、体验优秀的跨屏页面，大幅提升开发效率。</p>
+              <p>{{ i.1 }}</p>
             </div>
           </div>
         </div>
+        {% endfor %}
+        <!--
         <div class="layui-col-sm6">
           <div class="content">
             <div class="content-left"><img src="/static/res/static/img/home_img2.jpg"></div>
@@ -121,6 +124,7 @@
             </div>
           </div>
         </div>
+        -->
       </div>
       <div class="service-more"><a href="">查看更多</a></div>
     </div>

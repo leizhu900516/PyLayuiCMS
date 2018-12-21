@@ -18,3 +18,12 @@ cookiename = 'c_into'
 
 #image path
 image_path = "/static/res/static/images/"
+
+
+
+#应用分类字典
+app_to_tablenaem = {
+    "0":"plc_news",
+    "1":"plc_products",
+    "2":"plc_service",
+}

@@ -6,7 +6,7 @@ from flask import Blueprint,jsonify,request
 from utils.utils import  login_auth
 import os
 from utils.db import  MysqlHandle
-from setting import mysqlconfig,image_path
+from setting import mysqlconfig,image_path,app_to_tablenaem
 import time
 api = Blueprint("api",__name__)
 
@@ -19,27 +19,24 @@ def producthandle():
     '''
     data = {}
     params = request.form
-    print(params)
     try:
-        #newsorproduct：1是产品0是新闻
         newsorproduct = params.get('newsorproduct')
         title = params.get('title')
         desc = params.get('desc')
         content = params.get('content')
         show_image = params.get('file')
+        icon = params.get('icon')
         assert title,Exception('标题不能为空')
         assert desc,Exception('简介不能为空')
         mysqlhandle = MysqlHandle(**mysqlconfig)
-        if newsorproduct == '1':
-            tablename = 'plc_products'
-        elif newsorproduct == '0':
-            tablename = 'plc_news'
+        tablename = app_to_tablenaem.get(newsorproduct)
         assert tablename,Exception("内容类型错误")
-        _sql = "insert into {tablename} (`title`,`show_image`,`abstract`,`addtime`,`content`) " \
-              "VALUES ('{title}','{show_image}','{abstract}',{addtime},'{content}')"
+        _sql = "insert into {tablename} (`title`,`icon`,`show_image`,`abstract`,`addtime`,`content`) " \
+              "VALUES ('{title}','{icon}','{show_image}','{abstract}',{addtime},'{content}')"
         sql = _sql.format(title = title,
                    show_image = show_image,
                    abstract = desc,
+                   icon=icon,
                    addtime = int(time.time()),
                    content = content,
                    tablename = tablename)
@@ -85,7 +82,7 @@ def uploadimg():
 
 
 
-@api.route("/text",methods=['GET'])
+@api.route("/text",methods=['GET','POST'])
 @login_auth
 def gettext():
     '''
@@ -93,22 +90,39 @@ def gettext():
     :return:
     '''
     data = {}
-    try:
-        mysqlhandle = MysqlHandle(**mysqlconfig)
-        result = mysqlhandle.select("select * from plc_slogan",ret='all')
-        for i in result:
-            data.setdefault('data',[]).append(
-                {
-                    "id":str(i['id']),
-                    "title":'<span style="color: #01AAED;">{0}</span>'.format(i['title']),
-                    "addtimes":time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(i['addtimes']))
-                }
+    methods = request.method
+    if methods == 'GET':
+        try:
+            mysqlhandle = MysqlHandle(**mysqlconfig)
+            result = mysqlhandle.select("select * from plc_slogan",ret='all')
+            for i in result:
+                data.setdefault('data',[]).append(
+                    {
+                        "id":str(i['id']),
+                        "title":'<span style="color: #01AAED;">{0}</span>'.format(i['title']),
+                        "addtimes":time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(i['addtimes']))
+                    }
+                )
+            data['count'] = len(result)
+            data['code'] = 0
+            data['msg'] = 'success'
+        except Exception as e:
+            data['count'] = 0
+            data['code'] = 1
+            data['msg'] = str(e)
+    elif methods == "POST":
+        params = request.form
+        _id = params.get('id')
+        text = params.get('text')
+        try:
+            mysqlhandle = MysqlHandle(**mysqlconfig)
+            mysqlhandle.operation("update  plc_slogan set title='{title}' where id={id}".format(
+                title = text,
+                id=_id)
             )
-        data['count'] = len(result)
-        data['code'] = 0
-        data['msg'] = 'success'
-    except Exception as e:
-        data['count'] = 0
-        data['code'] = 1
-        data['msg'] = str(e)
+            data['code'] = 0
+            data['msg'] = '修改成功!!'
+        except Exception as e:
+            data['code'] = 1
+            data['msg'] = '修改失败{}'.format(str(e))
     return jsonify(data)

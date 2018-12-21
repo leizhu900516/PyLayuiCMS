@@ -23,14 +23,14 @@
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="/">网站主页</a></li>
-      <li class="layui-nav-item"><a href="">产品管理</a></li>
-      <li class="layui-nav-item"><a href="">新闻管理</a></li>
+      <li class="layui-nav-item"><a href="/manage/products">产品管理</a></li>
+      <li class="layui-nav-item"><a href="/manage/news">新闻管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
+          <dd><a href="">等待添加</a></dd>
+          <dd><a href="">等待添加</a></dd>
+          <dd><a href="">等待添加</a></dd>
         </dl>
       </li>
     </ul>
@@ -45,7 +45,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">退出</a></li>
+      <li class="layui-nav-item"><a href="/logout">退出</a></li>
     </ul>
   </div>
   
@@ -60,10 +60,10 @@
             <dd {% if request.path == '/manage/text'%} class="layui-this"{% endif %}><a href="/manage/text">标题</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item {% if request.path == '/manage/product'%} layui-nav-itemed{% endif %}">
+        <li class="layui-nav-item {% if request.path == '/manage/content'%} layui-nav-itemed{% endif %}">
           <a href="javascript:;">信息录入</a>
           <dl class="layui-nav-child">
-            <dd {% if request.path == '/manage/product'%} class="layui-this"{% endif %}><a href="/manage/product">新闻&产品</a></dd>
+            <dd {% if request.path == '/manage/product'%} class="layui-this"{% endif %}><a href="/manage/content">新闻&产品&服务</a></dd>
           </dl>
         </li>
       </ul>

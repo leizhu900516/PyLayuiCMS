@@ -4,7 +4,7 @@
 
 from flask import Blueprint,render_template,request,jsonify,make_response
 from utils.db import MysqlHandle
-from utils.utils import saltmd5
+from utils.utils import saltmd5,initsolgan
 import time
 from utils.token import  cookiesdict
 from setting import mysqlconfig,cookiename
@@ -13,19 +13,24 @@ import json
 home = Blueprint('home',__name__)
 
 @home.route("/")
-def homes():
+@initsolgan
+def homes(*args,**kw):
     data = {}
+    data.update(kw)
     mysqlhandle = MysqlHandle(**mysqlconfig)
-    result = mysqlhandle.select("select * from plc_images",ret='all')
-    for i in result:
+    #图片
+    images = mysqlhandle.select("select * from plc_images",ret='all')
+    for i in images:
         if i['page_location']=="home.slide":
             data.setdefault("homeslide",[]).append(i['imageurl'])
+    # 产品
     products = mysqlhandle.select("select * from plc_products",ret='all')
     for i in products:
         data.setdefault('homeproduct',[]).append([i['title'],i['abstract']])
-    text = mysqlhandle.select("select * from plc_slogan",ret='all')
-    for i in text:
-        data.setdefault('text',{})[i['id']] = i['title']
+    #服务
+    service = mysqlhandle.select("select * from plc_service",ret='all')
+    for i in service:
+        data.setdefault('homeservice',[]).append([i['title'],i['abstract'],i['show_image']])
     return render_template('front_end/index.html',data = data)
 
 
@@ -35,10 +40,12 @@ def about():
 
 
 @home.route("/product.html")
-def product():
+@initsolgan
+def product(*args,**kw):
     mysqlhandle = MysqlHandle(**mysqlconfig)
-    data = mysqlhandle.select("select * from plc_products",ret='all')
-    return render_template('front_end/product.html',data = data)
+    products = mysqlhandle.select("select * from plc_products",ret='all')
+    return render_template('front_end/product.html',products = products,
+                           data = kw)
 
 
 @home.route("/news.html")
@@ -56,7 +63,8 @@ def case():
 
 
 @home.route("/login.html",methods=['GET','POST'])
-def login():
+@initsolgan
+def login(*args,**kw):
     method = request.method
     data = {}
     if method == "POST":
@@ -85,5 +93,6 @@ def login():
             cookiesdict[token] = expires
             response.set_cookie(cookiename,token,max_age=expires)
     elif method == 'GET':
-        response = render_template('front_end/login.html')
+        data = kw
+        response = render_template('front_end/login.html',data = data)
     return response

@@ -12,12 +12,16 @@ admin = Blueprint("admin",__name__)
 def adminhome():
     return render_template('back_end/index.html')
 
-@admin.route("/product")
+@admin.route("/content")
 @login_auth
-def productmanage():
-    return render_template('back_end/product.html')
+def contentmanage():
+    return render_template('back_end/content.html')
 
 
+@admin.route("/products")
+@login_auth
+def productsmanage():
+    return render_template('back_end/content.html')
 
 @admin.route("/images")
 @login_auth
