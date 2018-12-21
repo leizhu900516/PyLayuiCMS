@@ -69,30 +69,22 @@
 {% endblock %}
 
 {% block customjs %}
-    <script>
-    //Demo
-    layui.use(['form','jquery','layer'], function(){
-      var form = layui.form,
-      $ = layui.jquery,
-      layer = layui.layer;
-      //监听提交
-      form.on('submit(formDemo)', function(data){
-        //layer.msg(JSON.stringify(data.field));
-        $.ajax({
-            url:'/login.html',
-            type:'post',
-            data:data.field,
-            dataType:'json',
-            success:function (result) {
-                console.log(result);
-                if(result.code==0){
-                    window.location.href = "/manage/"
-                }else {
-                    layer.msg(result.msg,{time:2000})
-                }
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    //layer.msg(JSON.stringify(data.field));
+    $.ajax({
+        url:'/login.html',
+        type:'post',
+        data:data.field,
+        dataType:'json',
+        success:function (result) {
+            console.log(result);
+            if(result.code==0){
+                window.location.href = "/manage/"
+            }else {
+                layer.msg(result.msg,{time:2000})
             }
-        });
-      });
+        }
     });
-    </script>
+});
 {% endblock %}

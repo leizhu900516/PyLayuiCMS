@@ -58,13 +58,6 @@ layui.define(['jquery', 'element', 'carousel', 'laypage'], function(exports){
     });
   });
 
-  //动态分页
-  laypage.render({
-    elem: 'newsPage'
-    ,count: 50
-    ,theme: '#2db5a3'
-    ,layout: ['page', 'next']
-  });
 
   //案例分页
   laypage.render({

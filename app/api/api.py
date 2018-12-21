@@ -116,9 +116,11 @@ def gettext():
         text = params.get('text')
         try:
             mysqlhandle = MysqlHandle(**mysqlconfig)
-            mysqlhandle.operation("update  plc_slogan set title='{title}' where id={id}".format(
+            mysqlhandle.operation("update  plc_slogan set title='{title}',"
+                                  "addtimes={addtimes} where id={id}".format(
                 title = text,
-                id=_id)
+                id=_id,
+                addtimes= int(time.time()))
             )
             data['code'] = 0
             data['msg'] = '修改成功!!'

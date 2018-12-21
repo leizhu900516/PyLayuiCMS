@@ -58,6 +58,7 @@
           <dl class="layui-nav-child {% if request.path == '/manage/images' or request.path == '/manage/text' %} layui-nav-itemed{% endif %}">
             <dd {% if request.path == '/manage/images'%} class="layui-this"{% endif %}><a href="/manage/images">图片</a></dd>
             <dd {% if request.path == '/manage/text'%} class="layui-this"{% endif %}><a href="/manage/text">标题</a></dd>
+            <dd {% if request.path == '/manage/other'%} class="layui-this"{% endif %}><a href="/manage/other">其它</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item {% if request.path == '/manage/content'%} layui-nav-itemed{% endif %}">

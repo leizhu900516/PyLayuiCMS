@@ -26,7 +26,7 @@ def homes(*args,**kw):
     # 产品
     products = mysqlhandle.select("select * from plc_products",ret='all')
     for i in products:
-        data.setdefault('homeproduct',[]).append([i['title'],i['abstract']])
+        data.setdefault('homeproduct',[]).append(i)
     #服务
     service = mysqlhandle.select("select * from plc_service",ret='all')
     for i in service:
@@ -35,8 +35,9 @@ def homes(*args,**kw):
 
 
 @home.route("/about.html")
-def about():
-    return render_template('front_end/about.html')
+@initsolgan
+def about(*args,**kw):
+    return render_template('front_end/about.html',data=kw)
 
 
 @home.route("/product.html")
@@ -49,17 +50,36 @@ def product(*args,**kw):
 
 
 @home.route("/news.html")
-def news():
-    return render_template('front_end/news.html')
+@initsolgan
+def news(*args,**kw):
+    page = int(request.args.get("page",1))
+    limit = int(request.args.get('limit',16))
+    mysqlhandle = MysqlHandle(**mysqlconfig)
+    news = mysqlhandle.select("select * from plc_news limit {0},{1}".format(
+        (page-1)*limit,page*limit)
+        ,ret='all')
+    newscount = mysqlhandle.select("select count(1) from plc_news")['count(1)']
+    print(newscount)
+    return render_template('front_end/news.html',data = kw,
+                           news = news,newscount = newscount)
 
 @home.route("/news/<int:nid>.html")
-def newsdetail(nid):
-    return render_template('front_end/newsDetail.html')
+@initsolgan
+def newsdetail(*args,**kw):
+    nid = kw.get('nid')
+    mysqlhandle = MysqlHandle(**mysqlconfig)
+
+    newsinfo = mysqlhandle.select("select * from plc_news where id={nid}".format(nid=nid))
+    timestamp = newsinfo['addtime']
+    newsinfo['addtime'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(timestamp))
+    return render_template('front_end/newsDetail.html',data = kw,
+                           newsinfo=newsinfo)
 
 
 @home.route("/case.html")
-def case():
-    return render_template('front_end/case.html')
+@initsolgan
+def case(*args,**kw):
+    return render_template('front_end/case.html',data = kw)
 
 
 @home.route("/login.html",methods=['GET','POST'])

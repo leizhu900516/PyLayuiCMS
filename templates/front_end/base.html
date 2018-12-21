@@ -73,8 +73,22 @@
   layui.config({
     base: '/static/res/static/js/'
   }).use('firm');
+
 </script>
-  {% block customjs %}
-  {% endblock %}
+<script>
+//JavaScript代码区域
+layui.use(['element','form','layedit','laypage','upload','jquery','layer','table'], function(){
+  var element = layui.element
+      ,form = layui.form
+      ,layer = layui.layer
+      ,$ = layui.jquery
+      ,laypage = layui.laypage
+      ,table = layui.table
+      ,upload = layui.upload
+      ,layedit = layui.layedit;
+   {%block customjs%}
+    {%endblock%}
+});
+</script>
 </body>
 </html>

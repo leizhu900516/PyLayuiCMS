@@ -33,10 +33,10 @@
         {% for i in data.homeproduct%}
         <div class="layui-col-sm6 layui-col-md3">
           <div class="content">
-            <div><img src="/static/res/static/img/Big_icon1.png"></div>
+            <div><img src="{{i.icon}}"></div>
             <div>
-              <p class="label">{{i.0}}</p>
-              <p>{{i.1}}</p>
+              <p class="label">{{i.title}}</p>
+              <p>{{i.abstract}}</p>
             </div>
             <a href="javascript:;">查看产品 ></a>
           </div>

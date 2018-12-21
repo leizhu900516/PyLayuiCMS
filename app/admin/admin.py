@@ -27,7 +27,13 @@ def productsmanage():
 @login_auth
 def imagesManage():
     return render_template('back_end/images.html')
+
 @admin.route("/text")
 @login_auth
 def textManage():
     return render_template('back_end/text.html')
+
+@admin.route("/other")
+@login_auth
+def otherManage():
+    return render_template('back_end/other.html')
