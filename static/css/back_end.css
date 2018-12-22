@@ -21,17 +21,46 @@
 .chc-recomment{color: #FFB800!important;}
 
 /*其它*/
-.add-other-div{
+.chc-other-add-item{
     height: 120px;
+    text-align: center;
+    display: block;
+    background-color: #009688;
+    border-radius: 2px;
+    transition: all .3s;
+    position: relative;
     cursor: pointer;
-    line-height: 120px;
-    -webkit-box-shadow: 2px 2px 6px #ddd;
+    -webkit-transition: all .3s;
+        -webkit-box-shadow: 2px 2px 6px #ddd;
     box-shadow: 2px 2px 6px #ddd;
+}
+.chc-other-add-item h3{
+    font-size: 25px;
+    color: #fff;
+    position: relative;
+    padding-top: 30px;
+
+}
+.chc-other-add-item i{font-size: 43px!important;}
+.chc-other-add-item p{
+    position: relative;
+    padding-top: 10px;
+    color: #2F4056;
+}
+.model-add-link{display: none;padding: 15px!important;}
+.model-add-link form{padding: 15px!important;}
+/*图片修改页面*/
+.chc-image-update{
+    /*text-align: center;*/
+    background-color: #fff;
+    padding: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-        background-color: #fff;
-    text-align: center;
-    font-size: 25px;
+    box-shadow: 2px 2px 20px #F0F0F0;
 }
-.add-other-div h3{color: #666;font-weight: bold;}
+.layui-upload-img{height: 100%;width: 100%}
+.display-image-div{height: 250px;}
+.chc-two-title{font-size: 22px;color: #666}
+.layui-icon-picture-fine{font-size: 24px!important;}
+h4{color: #666!important;}

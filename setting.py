@@ -27,3 +27,8 @@ app_to_tablenaem = {
     "1":"plc_products",
     "2":"plc_service",
 }
+
+#其它应用操作对应字典
+other_to_table = {
+    "link":"plc_friend_link",
+}

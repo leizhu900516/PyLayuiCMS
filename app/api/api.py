@@ -6,7 +6,8 @@ from flask import Blueprint,jsonify,request
 from utils.utils import  login_auth
 import os
 from utils.db import  MysqlHandle
-from setting import mysqlconfig,image_path,app_to_tablenaem
+from setting import mysqlconfig,image_path,app_to_tablenaem,\
+    other_to_table
 import time
 api = Blueprint("api",__name__)
 
@@ -127,4 +128,33 @@ def gettext():
         except Exception as e:
             data['code'] = 1
             data['msg'] = '修改失败{}'.format(str(e))
+    return jsonify(data)
+
+
+@api.route("/other",methods=['GET','POST'])
+@login_auth
+def otherOp():
+    data= {}
+    method = request.method
+    if method=="POST":
+        try:
+            params = request.form
+            flag = params.get("flag")
+            tablename = other_to_table.get(flag)
+            assert tablename,Exception("类型错误")
+            if flag == "link":
+                sql = "insert into {tablename} (`name`,`url`,`addtime`) " \
+                      "VALUES ('{name}','{url}',{addtime})".format(
+                                tablename = tablename,
+                                name = params.get('name'),
+                                addtime = int(time.time()),
+                                url = params.get('url'),
+                        )
+            mysqlhandle = MysqlHandle(**mysqlconfig)
+            mysqlhandle.operation(sql)
+            data['code'] = 0
+            data['msg'] = '成功'
+        except Exception as e:
+            data['code'] = 1
+            data['msg'] = str(e)
     return jsonify(data)
