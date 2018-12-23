@@ -35,7 +35,11 @@ def homes(*args,**kw):
 @home.route("/about.html")
 @initsolgan
 def about(*args,**kw):
-    return render_template('front_end/about.html',data=kw)
+    about = get_table_data("select * from  plc_about_us where flag=1",select_or_update="select",ret="all")
+    zhaopin = get_table_data("select * from  plc_about_us where flag=2",select_or_update="select",ret="all")
+    return render_template('front_end/about.html',data=kw,
+                           about = about,
+                           zhaopin = zhaopin)
 
 
 @home.route("/product.html")
@@ -54,7 +58,7 @@ def news(*args,**kw):
     news = get_table_data("select * from plc_news limit {0},{1}".format(
         (page-1)*limit,page*limit)
         ,ret='all',select_or_update="select")
-    newscount = get_table_data("select count(1) from plc_news",select_or_update="select")['count(1)']
+    newscount = get_table_data("select count(1) from plc_news",select_or_update="select")[0]['count(1)']
     return render_template('front_end/news.html',data = kw,
                            news = news,
                            newscount = newscount,
@@ -65,9 +69,9 @@ def news(*args,**kw):
 def newsdetail(*args,**kw):
     nid = kw.get('nid')
 
-    newsinfo = get_table_data("select * from plc_news where id={nid}".format(
+    newsinfo = get_table_data("select * from plc_news where status=1 and id={nid}".format(
         nid=nid),
-        select_or_update="select")
+        select_or_update="select")[0]
     timestamp = newsinfo['addtime']
     newsinfo['addtime'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(timestamp))
     return render_template('front_end/newsDetail.html',data = kw,

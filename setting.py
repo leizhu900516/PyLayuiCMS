@@ -32,6 +32,9 @@ app_to_tablenaem = {
 #其它应用操作对应字典
 other_to_table = {
     "link":"plc_friend_link",
+    "product":"plc_products",
+    "news":"plc_news",
+    "case":"plc_case",
 }
 
 #图片索引字典
@@ -39,4 +42,5 @@ imageDict = {
     "slide1":1,
     "slide2":2,
     "erweima":3,
+    "logoimg":4,
 }

@@ -12,7 +12,7 @@ admin = Blueprint("admin",__name__)
 @login_auth
 def adminhome():
     productcount = get_table_data("select count(1) from plc_products",
-                                  select_or_update="select")["count(1)"]
+                                  select_or_update="select")[0]["count(1)"]
 
     return render_template('back_end/index.html',productcount=productcount)
 
@@ -25,7 +25,7 @@ def contentmanage():
 @admin.route("/products")
 @login_auth
 def productsmanage():
-    return render_template('back_end/content.html')
+    return render_template('back_end/products.html')
 
 @admin.route("/images")
 @login_auth

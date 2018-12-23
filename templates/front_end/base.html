@@ -15,8 +15,8 @@
     <div class="layui-container">
       <!-- 公司logo -->
       <div class="nav-logo">
-        <a href="index.html">
-          <img src="/static/res/static/img/logo.png" alt="类友网络">
+        <a href="/">
+          <img src="{{data.images.logo}}" alt="类友网络">
         </a>
       </div>
       <div class="nav-list">
@@ -40,6 +40,7 @@
     <div class="layui-container">
       <p class="footer-web">
         {% for i in data.link %}
+        <a href="{{i.url}}">{{i.name}}</a>
         <a href="{{i.url}}">{{i.name}}</a>
         {% endfor %}
       </p>

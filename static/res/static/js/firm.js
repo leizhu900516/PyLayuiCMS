@@ -58,7 +58,15 @@ layui.define(['jquery', 'element', 'carousel', 'laypage'], function(exports){
     });
   });
 
-
+(function () {
+    $.ajax({
+        url:"/api/statistics",
+        type:"get",
+        success:function (result) {
+            console.log(result)
+        }
+    })
+})();
   // //案例分页
   // laypage.render({
   //   elem: 'casePage'
@@ -89,3 +97,4 @@ layui.define(['jquery', 'element', 'carousel', 'laypage'], function(exports){
 
   exports('firm', {}); 
 });
+

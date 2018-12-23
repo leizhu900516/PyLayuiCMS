@@ -3,10 +3,10 @@
 # @time: 2018/12/19
 
 from flask import Blueprint,jsonify,request
-from utils.utils import  login_auth,get_table_data
+from utils.utils import  login_auth,get_table_data,statisticsdata
 import os
 from setting import image_path,app_to_tablenaem,\
-    other_to_table
+    other_to_table,imageDict
 import time
 api = Blueprint("api",__name__)
 
@@ -161,18 +161,31 @@ def otherOp():
         flag = request.args.get("flag")
         page = int(request.args.get("page"))
         limit = int(request.args.get("limit",10))
+        keyid = request.args.get("keyid")
         tablename = other_to_table.get(flag)
         try:
             assert tablename,Exception("类型错误")
-            sql = ("select * from {tablename} limit {start},{limit}".format(
-                tablename = tablename,
-                start = (page-1)*limit,
-                limit = limit)
-            )
+            if keyid:
+                sql = "select * from {tablename} where id = {id}".format(
+                    id=keyid,
+                    tablename = tablename
+                )
+            else:
+                sql = "select * from {tablename} limit {start},{limit}".format(
+                    tablename = tablename,
+                    start = (page-1)*limit,
+                    limit = limit)
             result = get_table_data(sql, select_or_update="select",ret="all")
+            count = get_table_data("select count(1) from {tablename}".format(
+                tablename = tablename
+            ),select_or_update="select")
+            if count:
+                count = count[0]["count(1)"]
+            else:
+                count = 0
             for i in result:
                 i['addtime'] = time.strftime("%Y-%M-%d".format(time.localtime(i['addtime'])))
-            data['count'] = len(result)
+            data['count'] = count
             data['data'] = result
             data['code'] = 0
             data['msg'] = "success"
@@ -182,12 +195,11 @@ def otherOp():
     if method == "DELETE":
         params = request.form
         flag = params.get("flag")
-        tablename = other_to_table(flag)
-        if flag == "link":
-            sql = "delete from {tablename} where id={id}".format(
-                tablename = tablename,
-                id = params.get("_id")
-            )
+        tablename = other_to_table.get(flag)
+        sql = "delete from {tablename} where id={id}".format(
+            tablename = tablename,
+            id = params.get("_id")
+        )
         __result = get_table_data(sql,select_or_update="operation")
         data['code'] = 0
         data['msg'] = "success"
@@ -199,5 +211,24 @@ def updateimghandle():
     data = {}
     params = request.form
     flag = params.get("flag")
+    imageurl = params.get("imageurl")
+    tableId = imageDict.get(flag)
+    _status = get_table_data("update plc_images set imageurl='{imageurl}' where id={id}".format(
+        imageurl = imageurl,
+        id = tableId
+    ))
+    if _status:
+        data["code"] = 0
+        data["msg"] = "success"
+    else:
+        data["code"] = 1
+        data["msg"] = "失败"
+    return jsonify(data)
 
+@api.route("/statistics",methods = ['GET'])
+def statistics():
+    data = {}
+    statisticsdata()
+    data['code'] = 0
+    data['msg'] = "success"
     return jsonify(data)

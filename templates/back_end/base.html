@@ -19,12 +19,11 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">后台管理系统</div>
+    <a href="/manage"><div class="layui-logo">后台管理系统</div></a>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="/">网站主页</a></li>
-      <li class="layui-nav-item"><a href="/manage/products">产品管理</a></li>
-      <li class="layui-nav-item"><a href="/manage/news">新闻管理</a></li>
+      <li class="layui-nav-item {%if request.path == '/manage/products' %}layui-this{%endif%}"><a href="/manage/products">产品管理</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">

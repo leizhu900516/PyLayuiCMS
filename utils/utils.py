@@ -38,13 +38,21 @@ def initsolgan(f):
         data = {}
         mysqlhandle = MysqlHandle(**mysqlconfig)
         __result = mysqlhandle.select("select * from plc_slogan",ret='all')
-        __erweima = mysqlhandle.select("select * from plc_images where id=3")
+        __erweima = mysqlhandle.select("select * from plc_images",ret="all")
         __link = mysqlhandle.select("select * from plc_friend_link",ret="all")
         for i in __result:
             data[i['id']] = i['title']
         kwargs['public_slogan'] = data
         kwargs['link'] = __link
-        kwargs.setdefault('images',{})['erweima'] = __erweima.get("imageurl")
+        for i,j in enumerate(__erweima):
+            if j['id']==1:
+                kwargs.setdefault('images',{})["slide01"] = j.get("imageurl")
+            if j['id']==2:
+                kwargs.setdefault('images',{})["slide02"] = j.get("imageurl")
+            if j['id']==3:
+                kwargs.setdefault('images', {})["erweima"] = j.get("imageurl")
+            if j['id']==4:
+                kwargs.setdefault('images', {})["logo"] = j.get("imageurl")
         return f(*args,**kwargs)
     return decorator
 
@@ -69,3 +77,18 @@ def get_table_data(sql,select_or_update='select',ret='1'):
     else:
         _data = getattr(mysqlhandle, select_or_update)(sql, ret="1")
     return  _data
+
+
+def statisticsdata():
+    mysqlhandle = MysqlHandle(**mysqlconfig)
+    result = mysqlhandle.select("select * from plc_statistics where addtime='{}'".format(
+        time.strftime('%Y%m%d',time.localtime(time.time()))
+    ))
+    if result:
+        __r =  mysqlhandle.operation("update  plc_statistics set pv=pv+1 where addtime='{addtime}'".format(
+            addtime = time.strftime('%Y%m%d',time.localtime(time.time()))
+        ))
+    else:
+        __r =  mysqlhandle.operation("insert into plc_statistics (`pv`,`addtime`) values(1,'{addtime}')".format(
+            addtime = time.strftime('%Y%m%d',time.localtime(time.time()))
+        ))

@@ -69,6 +69,25 @@
                             </div>
                             </div>
                         </div>
+                        <div class="layui-col-md4 ">
+                            <div class="chc-image-update">
+                                <h4>LOGO图片修改，图片大小200*40，透明</h4>
+                                <hr>
+                                <div class="layui-row">
+                                    <div class="layui-col-md6">
+                                        <div class="layui-upload">
+                                          <button type="button" class="layui-btn" id="logoimg">上传新logo</button>
+                                          <div class="layui-upload-list">
+                                            <p id="demoTextlogoimg"></p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-md6">
+                                        <button class="layui-btn layui-btn-normal" value="logoimg" onclick="updateimage(this)">替换</button>
+                                    </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
@@ -172,13 +191,41 @@
       });
     }
   });
+  var uploadInst = upload.render({
+    elem: '#logoimg'
+    ,url: '/api/uploadimg'
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        <!--$('#uploadimgsrc').attr('src', result); //图片链接（base64）-->
+      });
+    }
+    ,done: function(res){
+        console.log(res);
+      //如果上传失败
+      if(res.code > 0){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+        $('#displayimage').attr('src', res.data.src); //图片链接（base64）
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#demoTextlogoimg');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
     //通用替换按钮事件
     updateimage = function (res){
         var imgType = $(res).attr("value");
+        var imageurl = $('#displayimage').attr('src');
         $.ajax({
         url:"/api/updateimg",
         type:"post",
-        data:{"flag":imgType},
+        data:{"flag":imgType,"imageurl":imageurl},
         dataType:"json",
         success:function(result){
             alert(result);
