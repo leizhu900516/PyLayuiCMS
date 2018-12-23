@@ -6,7 +6,7 @@
         <div class="layui-col-md12 layui-col-xs12">
             <h3 class="chc-one-title">全站前台图片修改</h3>
             <blockquote class="layui-elem-quote" style="    background-color: #fff;color: #FFB800">
-                替换网站图片功能。根据不同的位置进行选择上传和替换。 <br>
+                替换网站图片功能。根据不同的位置进行选择上传和替换。***请严格按照推荐的图片大小上传，否则会影响网站美观！！！ <br>
                 1、确定替换的图片 <br>
                 2、上传图片    <br>
                 3、点击"替换"
@@ -18,33 +18,33 @@
                     <div class="layui-row layui-col-space10">
                         <div class="layui-col-md4 ">
                             <div class="chc-image-update">
-                                <h4>主页滑动图片修改</h4>
+                                <h4>主页滑动图片修改，图片大小1920*897</h4>
                                 <hr>
                                 <div class="layui-row">
                                     <div class="layui-col-md6">
                                         <div class="layui-upload">
-                                          <button type="button" class="layui-btn" id="test1">上传滑动图片1</button>
+                                          <button type="button" class="layui-btn" id="slide1" > 上传滑动图片1</button>
                                           <div class="layui-upload-list">
 
-                                            <p id="demoText"></p>
+                                            <p id="demoTextslide1"></p>
                                           </div>
                                         </div>
                                     </div>
                                     <div class="layui-col-md6">
-                                        <button class="layui-btn layui-btn-normal">替换</button>
+                                        <button class="layui-btn layui-btn-normal" value="slide1" onclick="updateimage(this)">替换</button>
                                     </div>
                             </div>
                                 <div class="layui-row">
                                     <div class="layui-col-md6">
                                         <div class="layui-upload">
-                                          <button type="button" class="layui-btn" id="test1">上传滑动图片2</button>
+                                          <button type="button" class="layui-btn" id="slide2">上传滑动图片2</button>
                                           <div class="layui-upload-list">
-                                            <p id="demoText"></p>
+                                            <p id="demoTextslide2"></p>
                                           </div>
                                         </div>
                                     </div>
                                     <div class="layui-col-md6">
-                                        <button class="layui-btn layui-btn-normal">替换</button>
+                                        <button class="layui-btn layui-btn-normal"  value="slide2" onclick="updateimage(this)">替换</button>
                                     </div>
                             </div>
                             </div>
@@ -52,19 +52,19 @@
                         </div>
                         <div class="layui-col-md4 ">
                             <div class="chc-image-update">
-                                <h4>主页底部二维码图片修改</h4>
+                                <h4>主页底部二维码图片修改，图片大小86*86</h4>
                                 <hr>
                                 <div class="layui-row">
                                     <div class="layui-col-md6">
                                         <div class="layui-upload">
-                                          <button type="button" class="layui-btn" id="test1">上传新的二维码</button>
+                                          <button type="button" class="layui-btn" id="erweima">上传新的二维码</button>
                                           <div class="layui-upload-list">
-                                            <p id="demoText"></p>
+                                            <p id="demoTexterweima"></p>
                                           </div>
                                         </div>
                                     </div>
                                     <div class="layui-col-md6">
-                                        <button class="layui-btn layui-btn-normal">替换</button>
+                                        <button class="layui-btn layui-btn-normal" value="erweima" onclick="updateimage(this)">替换</button>
                                     </div>
                             </div>
                             </div>
@@ -92,7 +92,7 @@
  {% block customjs%}
 //普通图片上传
   var uploadInst = upload.render({
-    elem: '#test1'
+    elem: '#slide1'
     ,url: '/api/uploadimg'
     ,before: function(obj){
       //预读本地文件示例，不支持ie8
@@ -111,11 +111,78 @@
     }
     ,error: function(){
       //演示失败状态，并实现重传
-      var demoText = $('#demoText');
+      var demoText = $('#demoTextslide1');
       demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
       demoText.find('.demo-reload').on('click', function(){
         uploadInst.upload();
       });
     }
   });
+  var uploadInst = upload.render({
+    elem: '#slide2'
+    ,url: '/api/uploadimg'
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        <!--$('#uploadimgsrc').attr('src', result); //图片链接（base64）-->
+      });
+    }
+    ,done: function(res){
+        console.log(res);
+      //如果上传失败
+      if(res.code > 0){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+        $('#displayimage').attr('src', res.data.src); //图片链接（base64）
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#demoTextslide2');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
+  var uploadInst = upload.render({
+    elem: '#erweima'
+    ,url: '/api/uploadimg'
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        <!--$('#uploadimgsrc').attr('src', result); //图片链接（base64）-->
+      });
+    }
+    ,done: function(res){
+        console.log(res);
+      //如果上传失败
+      if(res.code > 0){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+        $('#displayimage').attr('src', res.data.src); //图片链接（base64）
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#demoTexterweima');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
+    //通用替换按钮事件
+    updateimage = function (res){
+        var imgType = $(res).attr("value");
+        $.ajax({
+        url:"/api/updateimg",
+        type:"post",
+        data:{"flag":imgType},
+        dataType:"json",
+        success:function(result){
+            alert(result);
+        }
+})
+    }
 {% endblock%}

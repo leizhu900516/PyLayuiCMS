@@ -59,13 +59,13 @@ layui.define(['jquery', 'element', 'carousel', 'laypage'], function(exports){
   });
 
 
-  //案例分页
-  laypage.render({
-    elem: 'casePage'
-    ,count: 50
-    ,theme: '#2db5a3' 
-    ,layout: ['page', 'next']
-  });
+  // //案例分页
+  // laypage.render({
+  //   elem: 'casePage'
+  //   ,count: 50
+  //   ,theme: '#2db5a3'
+  //   ,layout: ['page', 'next']
+  // });
 
   //新闻字段截取
   $(function(){

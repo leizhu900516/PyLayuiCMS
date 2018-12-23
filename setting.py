@@ -26,9 +26,17 @@ app_to_tablenaem = {
     "0":"plc_news",
     "1":"plc_products",
     "2":"plc_service",
+    "3":"plc_case",
 }
 
 #其它应用操作对应字典
 other_to_table = {
     "link":"plc_friend_link",
+}
+
+#图片索引字典
+imageDict = {
+    "slide1":1,
+    "slide2":2,
+    "erweima":3,
 }

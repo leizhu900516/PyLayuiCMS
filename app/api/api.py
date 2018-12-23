@@ -3,10 +3,9 @@
 # @time: 2018/12/19
 
 from flask import Blueprint,jsonify,request
-from utils.utils import  login_auth
+from utils.utils import  login_auth,get_table_data
 import os
-from utils.db import  MysqlHandle
-from setting import mysqlconfig,image_path,app_to_tablenaem,\
+from setting import image_path,app_to_tablenaem,\
     other_to_table
 import time
 api = Blueprint("api",__name__)
@@ -29,7 +28,6 @@ def producthandle():
         icon = params.get('icon')
         assert title,Exception('标题不能为空')
         assert desc,Exception('简介不能为空')
-        mysqlhandle = MysqlHandle(**mysqlconfig)
         tablename = app_to_tablenaem.get(newsorproduct)
         assert tablename,Exception("内容类型错误")
         _sql = "insert into {tablename} (`title`,`icon`,`show_image`,`abstract`,`addtime`,`content`) " \
@@ -41,7 +39,7 @@ def producthandle():
                    addtime = int(time.time()),
                    content = content,
                    tablename = tablename)
-        mysqlhandle.operation(sql)
+        get_table_data(sql,select_or_update="operation")
     except Exception as e:
         data['code'] = 1
         data['msg'] = str(e)
@@ -94,13 +92,13 @@ def gettext():
     methods = request.method
     if methods == 'GET':
         try:
-            mysqlhandle = MysqlHandle(**mysqlconfig)
-            result = mysqlhandle.select("select * from plc_slogan",ret='all')
+            result = get_table_data("select * from plc_slogan",ret='all',select_or_update="select")
             for i in result:
                 data.setdefault('data',[]).append(
                     {
                         "id":str(i['id']),
                         "title":'<span style="color: #01AAED;">{0}</span>'.format(i['title']),
+                        "desc":i["desc"],
                         "addtimes":time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(i['addtimes']))
                     }
                 )
@@ -116,13 +114,12 @@ def gettext():
         _id = params.get('id')
         text = params.get('text')
         try:
-            mysqlhandle = MysqlHandle(**mysqlconfig)
-            mysqlhandle.operation("update  plc_slogan set title='{title}',"
+            get_table_data("update  plc_slogan set title='{title}',"
                                   "addtimes={addtimes} where id={id}".format(
                 title = text,
                 id=_id,
                 addtimes= int(time.time()))
-            )
+            ,select_or_update="operation")
             data['code'] = 0
             data['msg'] = '修改成功!!'
         except Exception as e:
@@ -131,9 +128,13 @@ def gettext():
     return jsonify(data)
 
 
-@api.route("/other",methods=['GET','POST'])
+@api.route("/other",methods=['GET','POST','DELETE'])
 @login_auth
 def otherOp():
+    '''
+    获取网站内容接口
+    :return:
+    '''
     data= {}
     method = request.method
     if method=="POST":
@@ -150,11 +151,53 @@ def otherOp():
                                 addtime = int(time.time()),
                                 url = params.get('url'),
                         )
-            mysqlhandle = MysqlHandle(**mysqlconfig)
-            mysqlhandle.operation(sql)
+            get_table_data(sql,select_or_update="operation")
             data['code'] = 0
             data['msg'] = '成功'
         except Exception as e:
             data['code'] = 1
             data['msg'] = str(e)
+    if method == "GET":
+        flag = request.args.get("flag")
+        page = int(request.args.get("page"))
+        limit = int(request.args.get("limit",10))
+        tablename = other_to_table.get(flag)
+        try:
+            assert tablename,Exception("类型错误")
+            sql = ("select * from {tablename} limit {start},{limit}".format(
+                tablename = tablename,
+                start = (page-1)*limit,
+                limit = limit)
+            )
+            result = get_table_data(sql, select_or_update="select",ret="all")
+            for i in result:
+                i['addtime'] = time.strftime("%Y-%M-%d".format(time.localtime(i['addtime'])))
+            data['count'] = len(result)
+            data['data'] = result
+            data['code'] = 0
+            data['msg'] = "success"
+        except Exception as e:
+            data['code'] = 1
+            data['msg'] = str(e)
+    if method == "DELETE":
+        params = request.form
+        flag = params.get("flag")
+        tablename = other_to_table(flag)
+        if flag == "link":
+            sql = "delete from {tablename} where id={id}".format(
+                tablename = tablename,
+                id = params.get("_id")
+            )
+        __result = get_table_data(sql,select_or_update="operation")
+        data['code'] = 0
+        data['msg'] = "success"
+    return jsonify(data)
+
+@api.route("/updateimg",methods=['POST'])
+@login_auth
+def updateimghandle():
+    data = {}
+    params = request.form
+    flag = params.get("flag")
+
     return jsonify(data)

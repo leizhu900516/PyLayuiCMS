@@ -38,9 +38,13 @@ def initsolgan(f):
         data = {}
         mysqlhandle = MysqlHandle(**mysqlconfig)
         __result = mysqlhandle.select("select * from plc_slogan",ret='all')
+        __erweima = mysqlhandle.select("select * from plc_images where id=3")
+        __link = mysqlhandle.select("select * from plc_friend_link",ret="all")
         for i in __result:
             data[i['id']] = i['title']
         kwargs['public_slogan'] = data
+        kwargs['link'] = __link
+        kwargs.setdefault('images',{})['erweima'] = __erweima.get("imageurl")
         return f(*args,**kwargs)
     return decorator
 
@@ -52,3 +56,16 @@ def saltmd5(passwd):
     md5passwd = _m.hexdigest()
     print(md5passwd)
     return md5passwd
+
+
+def get_table_data(sql,select_or_update='select',ret='1'):
+    '''
+    获取表数据
+    :return:
+    '''
+    mysqlhandle = MysqlHandle(**mysqlconfig)
+    if ret == "all":
+        _data = getattr(mysqlhandle,select_or_update)(sql,ret="all")
+    else:
+        _data = getattr(mysqlhandle, select_or_update)(sql, ret="1")
+    return  _data

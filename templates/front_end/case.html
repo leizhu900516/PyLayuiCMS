@@ -12,53 +12,34 @@
   <div class="main-case">
     <div class="layui-container">
       <div class="layui-row">
-        <div class="layui-inline content">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case1.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
+        {% for i in case%}
+        <div class="layui-inline content {{i.css}}">
+          <div class="layui-inline case-img"><img src="{{i.show_image}}"></div>
+          <p class="lable">{{i.title}}</p>
+          <p>{{i.abstract}}</p>
         </div>
-        <div class="layui-inline content even center">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case2.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case3.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content even">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case4.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content center">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case5.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content even">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case6.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case7.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content even center">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case8.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
-        <div class="layui-inline content">
-          <div class="layui-inline case-img"><img src="/static/res/static/img/case9.jpg"></div>
-          <p class="lable">名牌工厂店</p>
-          <p>一家工厂企业的商品展示网站，主要以卖高端服饰为主。主要以卖高端服饰为主。主要以卖高端服饰为主。</p>
-        </div>
+        {% endfor %}
       </div>
       <div id="casePage"></div>
     </div>
   </div>
+{%endblock%}
+
+{% block customjs%}
+  //动态分页
+  laypage.render({
+    elem: 'casePage'
+    ,count: {{casecount}}
+    ,theme: '#2db5a3'
+    ,limit:9
+    ,curr:{{page}}
+    ,layout: ['page', 'next']
+    ,jump:function(obj,first){
+      var nextpage = obj.curr;
+      if(!first){
+          window.location.href = '/case.html?page='+nextpage;
+        }
+    }
+  });
+
 {%endblock%}

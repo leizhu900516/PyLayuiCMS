@@ -17,8 +17,12 @@ class MysqlHandle(object):
 
     def operation(self,sql):
         print(sql)
-        self.cusor.execute(sql)
-        self.conn.commit()
+        try:
+            self.cusor.execute(sql)
+            self.conn.commit()
+        except:
+            return False
+        return True
     def select(self,sql,ret=1):
         '''
         :param sql:
@@ -27,8 +31,14 @@ class MysqlHandle(object):
         '''
         _r = self.cusor.execute(sql)
         if ret==1:
-            return self.cusor.fetchone()
-        return self.cusor.fetchall()
+            result = self.cusor.fetchone()
+            if not result:
+                result = []
+            return result
+        result = self.cusor.fetchall()
+        if not result:
+            result = {}
+        return result
 
     def __del__(self):
         print("close db")

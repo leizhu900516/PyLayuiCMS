@@ -3,11 +3,10 @@
 # @time: 2018/12/18
 
 from flask import Blueprint,render_template,request,jsonify,make_response
-from utils.db import MysqlHandle
-from utils.utils import saltmd5,initsolgan
+from utils.utils import saltmd5,initsolgan,get_table_data
 import time
 from utils.token import  cookiesdict
-from setting import mysqlconfig,cookiename
+from setting import cookiename
 import uuid
 import json
 home = Blueprint('home',__name__)
@@ -17,18 +16,17 @@ home = Blueprint('home',__name__)
 def homes(*args,**kw):
     data = {}
     data.update(kw)
-    mysqlhandle = MysqlHandle(**mysqlconfig)
     #图片
-    images = mysqlhandle.select("select * from plc_images",ret='all')
+    images = get_table_data("select * from plc_images",select_or_update="select",ret='all')
     for i in images:
         if i['page_location']=="home.slide":
             data.setdefault("homeslide",[]).append(i['imageurl'])
     # 产品
-    products = mysqlhandle.select("select * from plc_products",ret='all')
+    products = get_table_data("select * from plc_products",select_or_update="select",ret='all')
     for i in products:
         data.setdefault('homeproduct',[]).append(i)
     #服务
-    service = mysqlhandle.select("select * from plc_service",ret='all')
+    service = get_table_data("select * from plc_service",select_or_update="select",ret='all')
     for i in service:
         data.setdefault('homeservice',[]).append([i['title'],i['abstract'],i['show_image']])
     return render_template('front_end/index.html',data = data)
@@ -43,8 +41,7 @@ def about(*args,**kw):
 @home.route("/product.html")
 @initsolgan
 def product(*args,**kw):
-    mysqlhandle = MysqlHandle(**mysqlconfig)
-    products = mysqlhandle.select("select * from plc_products",ret='all')
+    products = get_table_data("select * from plc_products",select_or_update="select",ret='all')
     return render_template('front_end/product.html',products = products,
                            data = kw)
 
@@ -54,22 +51,23 @@ def product(*args,**kw):
 def news(*args,**kw):
     page = int(request.args.get("page",1))
     limit = int(request.args.get('limit',16))
-    mysqlhandle = MysqlHandle(**mysqlconfig)
-    news = mysqlhandle.select("select * from plc_news limit {0},{1}".format(
+    news = get_table_data("select * from plc_news limit {0},{1}".format(
         (page-1)*limit,page*limit)
-        ,ret='all')
-    newscount = mysqlhandle.select("select count(1) from plc_news")['count(1)']
-    print(newscount)
+        ,ret='all',select_or_update="select")
+    newscount = get_table_data("select count(1) from plc_news",select_or_update="select")['count(1)']
     return render_template('front_end/news.html',data = kw,
-                           news = news,newscount = newscount)
+                           news = news,
+                           newscount = newscount,
+                           page = page)
 
 @home.route("/news/<int:nid>.html")
 @initsolgan
 def newsdetail(*args,**kw):
     nid = kw.get('nid')
-    mysqlhandle = MysqlHandle(**mysqlconfig)
 
-    newsinfo = mysqlhandle.select("select * from plc_news where id={nid}".format(nid=nid))
+    newsinfo = get_table_data("select * from plc_news where id={nid}".format(
+        nid=nid),
+        select_or_update="select")
     timestamp = newsinfo['addtime']
     newsinfo['addtime'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(timestamp))
     return render_template('front_end/newsDetail.html',data = kw,
@@ -79,7 +77,32 @@ def newsdetail(*args,**kw):
 @home.route("/case.html")
 @initsolgan
 def case(*args,**kw):
-    return render_template('front_end/case.html',data = kw)
+    '''
+    案例
+    :param args:
+    :param kw:
+    :return:
+    '''
+    page = int(request.args.get('page',1))
+    limit = int(request.args.get('limit',9))
+    sql = "select * from plc_case where status = 1 limit {start},{limit}".format(
+        start = (page-1)*limit,
+        limit = limit
+    )
+    case = get_table_data(sql,select_or_update="select",ret="all")
+    casecount = get_table_data("select count(1) from plc_case","select")[0]['count(1)']
+    for index,cs in enumerate(case):
+        if  index in [1,7]:
+            cs["css"] = "even center"
+        if index in [3,5]:
+            cs["css"] = "even"
+        if  index == 4:
+            cs["css"] = " center"
+
+    return render_template('front_end/case.html',data = kw,
+                           case = case,
+                           casecount = casecount,
+                           page = page)
 
 
 @home.route("/login.html",methods=['GET','POST'])
@@ -92,11 +115,10 @@ def login(*args,**kw):
             username = request.form.get("username")
             password = request.form.get("password")
             assert username,password
-            mysqlhandle = MysqlHandle(**mysqlconfig)
-            result = mysqlhandle.select("select * from plc_user where username='{username}' and passwd='{passwd}'".format(
+            result = get_table_data("select * from plc_user where username='{username}' and passwd='{passwd}'".format(
                 username = username,
                 passwd = saltmd5(password)
-            ),ret=1)
+            ),ret=1,select_or_update="select")
             if not result:
                 data['code'] = 1
                 data['msg'] = '用户名或密码错误'

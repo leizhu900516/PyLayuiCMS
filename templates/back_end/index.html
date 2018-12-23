@@ -3,7 +3,7 @@
 {% block content%}
 
     <div style="padding: 15px" class="layui-row layui-col-space10">
-      <div class="layui-col-xs12 layui-col-md8">
+      <div class="layui-col-xs12 layui-col-md9">
         <div class="layui-row layui-col-space10">
           <div class="layui-col-md6">
             <div class="layui-card">
@@ -14,13 +14,13 @@
                     <a href="" class="chc-target">
                       <h3>新闻总数</h3>
                        <p>
-                         <cite>100</cite>
+                         <cite>{{productcount}}</cite>
                        </p>
                     </a>
                   </li>
                   <li class="layui-col-xs6 ">
                     <a href="" class="chc-target">
-                      <h3>新闻总数</h3>
+                      <h3>产品总数</h3>
                        <p>
                          <cite>100</cite>
                        </p>
@@ -28,7 +28,7 @@
                   </li>
                   <li class="layui-col-xs6">
                     <a href="" class="chc-target">
-                      <h3>新闻总数</h3>
+                      <h3>案例总数</h3>
                        <p>
                          <cite>100</cite>
                        </p>
@@ -36,7 +36,7 @@
                   </li>
                   <li class="layui-col-xs6 ">
                     <a href="" class="chc-target">
-                      <h3>新闻总数</h3>
+                      <h3>今日流量</h3>
                        <p>
                          <cite>100</cite>
                        </p>
@@ -48,33 +48,16 @@
           </div>
           <div class="layui-col-md6">
             <div class="layui-card">
-              <div class="layui-card-header">等待完善</div>
+              <div class="layui-card-header">外链</div>
               <div class="layui-card-body">
-                <ul class="layui-row layui-col-space10">
-                  <li class="layui-col-xs6">
-                    <a href="">
-                      <h3>指标</h3>
-                       <p>
-                         <cite>100</cite>
-                       </p>
-                    </a>
-                  </li>
-                  <li class="layui-col-xs6">
-                    <a href="">
-                      <h3>指标</h3>
-                       <p>
-                         <cite>100</cite>
-                       </p>
-                    </a>
-                  </li>
-                </ul>
+                <table class="layui-hide" id="otherlink" lay-filter="otherlink"></table>
               </div>
             </div>
           </div>
         </div>
 
       </div>
-      <div class="layui-col-xs12 layui-col-md4">
+      <div class="layui-col-xs12 layui-col-md3">
           <div class="layui-card">
             <div class="layui-card-header">卡片面板</div>
             <div class="layui-card-body">
@@ -84,4 +67,44 @@
           </div>
       </div>
     </div>
+
+<script type="text/html" id="linkbarDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+{%endblock%}
+
+
+{% block customjs%}
+  table.render({
+    elem: '#otherlink'
+    ,url:'/api/other?flag=link'
+    ,title: '网站友情链接'
+    ,limit:10
+    ,cols: [[{field:'id', title:'ID', width: '10%'}
+      ,{field:'name', title:'name',width: '20%'}
+      ,{field:'url', title:'url', width: '45%'}
+      ,{fixed: 'right', title:'操作', toolbar: '#linkbarDemo', width: '25%'}
+    ]]
+    ,page: true
+  });
+  //监听行工具事件
+  table.on('tool(otherlink)', function(obj){
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        $.ajax({
+              url:"/api/other?flag=link&_id="+data.id,
+              type:"DELETE",
+              data:{_id:data.id,flag:"link"},
+              dataType:"json",
+              success:function(result){
+                  console.log(result)
+                            }
+              })
+        obj.del();
+        layer.close(index);
+      });
+    }
+  });
 {%endblock%}
