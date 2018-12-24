@@ -33,7 +33,7 @@ body{background: #FFF;}
 
 /*轮播*/
 #banner img{min-width: 100%; height: 898px;}
-#banner .panel{width: 400px; position: absolute; top: 25%; left: 50%; margin-left: -200px; text-align: center;}
+#banner .panel{width: 100%;position: absolute;top: 25%;;text-align: center;margin: 0 auto;}
 #banner .panel p{color: #8c8c8c; font-size: 44px; line-height: 80px; letter-spacing: 15px;}
 #banner .panel p.title{color: #4a4a4a; font-size: 54px; letter-spacing: 10px;}
 
@@ -60,7 +60,7 @@ body{background: #FFF;}
 .main-service .content .content-right{box-sizing: border-box; background: #FFF; padding: 58px 40px 0 48px; width: 50%; height: 100%; position: absolute; top: 0; right: 0; transition: 0.3s; overflow: hidden;}
 .main-service .content .content-right p{color: #adadad; line-height: 32px; overflow: hidden; text-overflow: ellipsis;}
 .main-service .content .content-right p.label{font-size: 16px; color: #4a4a4a;}
-.main-service .content .content-right span{display: block; width: 50px; height: 2px; background: #2cb6a1; margin-bottom: 23px;} 
+.main-service .content .content-right span{display: block; width: 50px; height: 2px; background: #2cb6a1; margin-bottom: 23px;}
 .main-service .content .content-right:hover{box-shadow: 2px 2px 2px #EEE; transition: 0.3s;}
 .main-service .service-more{padding-top: 80px; padding-bottom: 80px; text-align: center;}
 .main-service .service-more a{padding: 10px 62px; font-size: 23px; line-height: 46px;color: #FFF; background: #7fd3c6; border-radius: 3px;}
@@ -168,6 +168,10 @@ body{background: #FFF;}
 .layui-card-header {
     font-weight: bold!important;
 }
+
+/*悬浮客服*/
+#im_main{border: 1px solid #dddddd;border-radius: 10px;background: #F9FAFB;text-align: center;width: 100px;position: fixed;top: 22%;left: 10px;line-height: 20px;}
+#im_main img{width: 100%;}
 
 /*后台*/
 @media screen and (max-width: 480px){

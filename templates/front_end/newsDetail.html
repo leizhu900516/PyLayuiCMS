@@ -12,8 +12,8 @@
       <p class="news"><a href="news.html">实时新闻</a> > 新闻详情</p>
       <h1>{{newsinfo.title}}</h1>
       <p class="pushtime">发布时间：<span>{{newsinfo.addtime}}</span></p>
-      <p class="introTop">TA家的珍珠是用黑糖熬制的，要熬整整四个小时才行，每熬一锅黑糖只能做出40杯奶茶，好味，是值得等待的。</p>
-      <div><img src="/static/res/static/img/news_big.jpg" alt="新闻详情图"></div>
+      <p class="introTop">{{newsinfo.abstract}}</p>
+      <div><img src="{{newsinfo.show_image}}" alt="新闻详情图"></div>
       <p class="introBott">
         {{newsinfo.content}}
       </p>

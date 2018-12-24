@@ -17,9 +17,15 @@ def login_auth(f):
     @wraps(f)
     def decorator():
         cookie = request.cookies.get(cookiename)
-        if cookie in cookiesdict:
-            if cookiesdict[cookie] <int(time.time()):
-                cookiesdict.__delitem__(cookie)
+        __check = get_table_data("select * from plc_cookies where cookiename = '{cookiename}'".format(
+            cookiename=cookie
+        ),select_or_update="select",ret="1")
+        if __check:
+            __check = __check[0]
+            if __check["expiretime"] <int(time.time()):
+                __ = get_table_data("delete from plc_cookies where cookiename = '{cookiename}'".format(
+                    cookiename=cookie
+                ),select_or_update="operation")
             return f()
         else:
             return redirect('/login.html')

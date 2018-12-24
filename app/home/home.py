@@ -49,6 +49,20 @@ def product(*args,**kw):
     return render_template('front_end/product.html',products = products,
                            data = kw)
 
+@home.route("/product/<int:pid>.html")
+@initsolgan
+def productdetail(*args,**kw):
+    pid = kw.get('pid')
+
+    newsinfo = get_table_data("select * from plc_products where status=1 and id={pid}".format(
+        pid=pid),
+        select_or_update="select")[0]
+    timestamp = newsinfo['addtime']
+    newsinfo['addtime'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(timestamp))
+    return render_template('front_end/newsDetail.html',data = kw,
+                           newsinfo=newsinfo)
+
+
 
 @home.route("/news.html")
 @initsolgan
@@ -136,7 +150,10 @@ def login(*args,**kw):
             response = make_response(json.dumps(data))
             token = str(uuid.uuid1())
             expires = int(time.time())+24*3600
-            cookiesdict[token] = expires
+            _insertcookie = get_table_data("insert into `plc_cookies` (cookiename,expiretime) values('{cookiename}',{expiretime})".format(
+                cookiename = token,
+                expiretime = expires
+            ),select_or_update="operation")
             response.set_cookie(cookiename,token,max_age=expires)
     elif method == 'GET':
         data = kw

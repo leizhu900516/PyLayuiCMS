@@ -15,7 +15,7 @@ class MysqlHandle(object):
         print("connect db")
         return _conn
 
-    def operation(self,sql):
+    def operation(self,sql,ret=None):
         print(sql)
         try:
             self.cusor.execute(sql)
