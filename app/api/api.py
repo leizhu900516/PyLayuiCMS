@@ -210,13 +210,14 @@ def otherOp():
 def updateimghandle():
     data = {}
     params = request.form
+    print("params=",params)
     flag = params.get("flag")
     imageurl = params.get("imageurl")
     tableId = imageDict.get(flag)
     _status = get_table_data("update plc_images set imageurl='{imageurl}' where id={id}".format(
         imageurl = imageurl,
         id = tableId
-    ))
+    ),select_or_update="operation")
     if _status:
         data["code"] = 0
         data["msg"] = "success"

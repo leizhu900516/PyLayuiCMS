@@ -228,7 +228,7 @@
         data:{"flag":imgType,"imageurl":imageurl},
         dataType:"json",
         success:function(result){
-            alert(result);
+            layui.msg(result.msg,{time:2000})
         }
 })
     }
