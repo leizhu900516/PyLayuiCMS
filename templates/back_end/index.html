@@ -50,7 +50,7 @@
             <div class="layui-card">
               <div class="layui-card-header">外链</div>
               <div class="layui-card-body">
-                <table class="layui-hide" id="otherlink" lay-filter="otherlink"></table>
+                    xxx
               </div>
             </div>
           </div>
@@ -75,36 +75,5 @@
 
 
 {% block customjs%}
-  table.render({
-    elem: '#otherlink'
-    ,url:'/api/other?flag=link'
-    ,title: '网站友情链接'
-    ,limit:10
-    ,cols: [[{field:'id', title:'ID', width: '10%'}
-      ,{field:'name', title:'name',width: '20%'}
-      ,{field:'url', title:'url', width: '45%'}
-      ,{fixed: 'right', title:'操作', toolbar: '#linkbarDemo', width: '25%'}
-    ]]
-    ,page: true
-  });
-  //监听行工具事件
-  table.on('tool(otherlink)', function(obj){
-    var data = obj.data;
-    //console.log(obj)
-    if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
-        $.ajax({
-              url:"/api/other?flag=link&_id="+data.id,
-              type:"DELETE",
-              data:{_id:data.id,flag:"link"},
-              dataType:"json",
-              success:function(result){
-                  console.log(result)
-                            }
-              })
-        obj.del();
-        layer.close(index);
-      });
-    }
-  });
+
 {%endblock%}

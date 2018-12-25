@@ -34,11 +34,11 @@
           <span></span><span></span><span></span>
         </button>
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item {% if request.path == '/'%} layui-this {%endif%}"><a href="/">首页</a></li>
-          <li class="layui-nav-item {% if request.path == '/product.html'%} layui-this {%endif%}"><a href="/product.html">产品</a></li>
-          <li class="layui-nav-item {% if request.path == '/news.html'%} layui-this {%endif%}"><a href="/news.html">动态</a></li>
-          <li class="layui-nav-item {% if request.path == '/case.html'%} layui-this {%endif%}"><a href="/case.html">案例</a></li>
-          <li class="layui-nav-item {% if request.path == '/about.html'%} layui-this {%endif%}"><a href="/about.html">关于</a></li>
+          <li class="layui-nav-item {% if request.path == '/'%} layui-this {%endif%}"><a href="/">{{data.public_slogan.13}}</a></li>
+          <li class="layui-nav-item {% if request.path == '/product.html'%} layui-this {%endif%}"><a href="/product.html">{{data.public_slogan.14}}</a></li>
+          <li class="layui-nav-item {% if request.path == '/news.html'%} layui-this {%endif%}"><a href="/news.html">{{data.public_slogan.15}}</a></li>
+          <li class="layui-nav-item {% if request.path == '/case.html'%} layui-this {%endif%}"><a href="/case.html">{{data.public_slogan.16}}</a></li>
+          <li class="layui-nav-item {% if request.path == '/about.html'%} layui-this {%endif%}"><a href="/about.html">{{data.public_slogan.17}}</a></li>
         </ul>
       </div>
     </div>
@@ -62,7 +62,7 @@
               <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;{{data.public_slogan.8}}</span></p>
             </div>
             <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
-              <p class="contact-top"><span class="right">{{data.public_slogan.5}}</span></p>
+              <p class="contact-top"><span class="right">{{data.public_slogan.9}}</span></p>
               <p class="contact-bottom"><span class="right">{{data.public_slogan.6}}</span></p>
             </div>
           </div>
@@ -70,30 +70,6 @@
       </div>
     </div>
   </div>
-  <!--悬浮客服-->
-  <div class="im_main" id="im_main" >
-        <div id="close_im" class="close-im"><a href="javascript:void(0);" title="点击关闭">&nbsp;</a></div>
-        <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=278746485&amp;site=qq&amp;menu=yes" class="im-qq qq-a" title="在线QQ客服">
-            <div class="qq-container"></div>
-            <div class="qq-hover-c"><img class="img-qq" src="/static/res/layui/images/kefu/qq.png"></div>
-            <span>微信号咨询</span>
-        </a>
-        <div class="im-tel">
-            <div>客服001</div>
-            <div class="tel-num"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=278746485&amp;site=qq&amp;menu=yes" target="_blank">
-                <img title="qq业务" border="0" alt="qq业务" src="/static/res/layui/images/kefu/button_11.gif" style="    width: 70px;">
-            </a></div>
-            <div>客服002</div>
-            <div class="tel-num"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=278746485&amp;site=qq&amp;menu=yes" target="_blank">
-                <img title="微信业务" border="0" alt="微信业务" src="/static/res/layui/images/kefu/button_11.gif" style="    width: 70px;">
-            </a></div>
-        </div>
-        <div class="im-footer" style="position:relative">
-            <div class="weixing-container">
-                <img alt="微信" src="/static/res/layui/images/kefu/weixincode.jpg">
-            </div>
-        </div>
-    </div>
 <script src="/static/res/layui/layui.js"></script>
 <!--[if lt IE 9]>
   <script src="/static/res/layui/html5.min.js"></script>

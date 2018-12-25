@@ -4,8 +4,9 @@ PyLayuiCMS
 #### 开发环境
 ##### python3+layui2.4+flask
 #### 缩略图
-![前台1](/static/res/static/snap/snap1.png)
-![前台2](/static/res/static/snap/snap2.png)
-![后台1](/static/res/static/snap/snap3.png)
-![后台2](/static/res/static/snap/snap4.png)
+![前台1](/test/image/gif5新文件.gif)
+
+#### 安装部署
+- PyLayuiCMS.sql是初始化库表数据
+
 

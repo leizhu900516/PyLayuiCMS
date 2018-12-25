@@ -143,7 +143,15 @@ def otherOp():
             flag = params.get("flag")
             tablename = other_to_table.get(flag)
             assert tablename,Exception("类型错误")
-            if flag == "link":
+            isupdate = params.get("update")
+            if isupdate:
+                sql = "update {tablename} set {field}='{value}' where id={id}".format(
+                    tablename = tablename,
+                    field = params.get("field"),
+                    id = params.get("_id"),
+                    value = params.get("value")
+                )
+            else:
                 sql = "insert into {tablename} (`name`,`url`,`addtime`) " \
                       "VALUES ('{name}','{url}',{addtime})".format(
                                 tablename = tablename,
@@ -184,7 +192,7 @@ def otherOp():
             else:
                 count = 0
             for i in result:
-                i['addtime'] = time.strftime("%Y-%M-%d".format(time.localtime(i['addtime'])))
+                i['addtime'] = time.strftime("%Y-%m-%d".format(time.localtime(i['addtime'])))
             data['count'] = count
             data['data'] = result
             data['code'] = 0

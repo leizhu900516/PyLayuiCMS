@@ -59,7 +59,7 @@ def productdetail(*args,**kw):
         select_or_update="select")[0]
     timestamp = newsinfo['addtime']
     newsinfo['addtime'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(timestamp))
-    return render_template('front_end/newsDetail.html',data = kw,
+    return render_template('front_end/productDetail.html',data = kw,
                            newsinfo=newsinfo)
 
 

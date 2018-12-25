@@ -35,6 +35,7 @@ other_to_table = {
     "product":"plc_products",
     "news":"plc_news",
     "case":"plc_case",
+    "service":"plc_service",
 }
 
 #图片索引字典
