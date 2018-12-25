@@ -3,6 +3,7 @@ PyLayuiCMS
 #### 简约企业网站：前台+后台
 #### 开发环境
 ##### python3+layui2.4+flask
+#### 前端链接 [layui](https://fly.layui.com/store/layuiNetCompany/)
 #### 缩略图
 ![前台1](/test/image/gif5新文件.gif)
 
