@@ -48,21 +48,52 @@
           </div>
           <div class="layui-col-md6">
             <div class="layui-card">
-              <div class="layui-card-header">外链</div>
+              <div class="layui-card-header">待添加功能</div>
               <div class="layui-card-body">
                     xxx
               </div>
             </div>
+          </div>
+          <div class="layui-col-md12 layui-col-xs12">
+            <div class="layui-card">
+              <div class="layui-card-header">流量图</div>
+              <div class="layui-card-body">
+                    <canvas id="myChart"></canvas>
+              </div>
+            </div>
+
           </div>
         </div>
 
       </div>
       <div class="layui-col-xs12 layui-col-md3">
           <div class="layui-card">
-            <div class="layui-card-header">卡片面板</div>
+            <div class="layui-card-header">版本信息</div>
             <div class="layui-card-body">
-              卡片式面板面板通常用于非白色背景色的主体内<br>
-              从而映衬出边框投影
+                <table class="layui-table">
+                  <colgroup>
+                    <col>
+                    <col>
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <td>当前版本</td>
+                      <td>2018.12.27</td>
+                    </tr>
+                    <tr>
+                      <td>基于框架</td>
+                      <td>layui-v2.4.5</td>
+                    </tr>
+                    <tr>
+                      <td>更多描述</td>
+                      <td>。。。</td>
+                    </tr>
+                    <tr>
+                      <td>更多描述</td>
+                      <td>。。。</td>
+                    </tr>
+                  </tbody>
+                </table>
             </div>
           </div>
       </div>
@@ -71,6 +102,26 @@
 <script type="text/html" id="linkbarDemo">
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+  <script src="/static/res/static/js/Chart.min.js"></script>
+   <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "PV",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
 {%endblock%}
 
 
