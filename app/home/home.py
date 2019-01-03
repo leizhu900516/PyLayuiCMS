@@ -159,3 +159,8 @@ def login(*args,**kw):
         data = kw
         response = render_template('front_end/login.html',data = data)
     return response
+
+
+@home.route("/test.html",methods=['GET','POST'])
+def test():
+    return render_template('front_end/test.html')
